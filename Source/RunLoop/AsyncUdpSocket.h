@@ -63,17 +63,17 @@ __deprecated_msg("The RunLoop versions of CocoaAsyncSocket are deprecated and wi
 /**
  * Creates new instances of AsyncUdpSocket.
 **/
-- (id)init;
-- (id)initWithDelegate:(id)delegate;
-- (id)initWithDelegate:(id)delegate userData:(long)userData;
+- (instancetype)init;
+- (instancetype)initWithDelegate:(id)delegate;
+- (instancetype)initWithDelegate:(id)delegate userData:(long)userData;
 
 /**
  * Creates new instances of AsyncUdpSocket that support only IPv4 or IPv6.
  * The other init methods will support both, unless specifically binded or connected to one protocol.
  * If you know you'll only be using one protocol, these init methods may be a bit more efficient.
 **/
-- (id)initIPv4;
-- (id)initIPv6;
+- (instancetype)initIPv4;
+- (instancetype)initIPv6;
 
 - (id)delegate;
 - (void)setDelegate:(id)delegate;

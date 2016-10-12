@@ -1027,7 +1027,7 @@ typedef NS_ENUM(NSInteger, GCDAsyncSocketError) {
 + (BOOL)isIPv4Address:(NSData *)address;
 + (BOOL)isIPv6Address:(NSData *)address;
 
-+ (BOOL)getHost:( NSString * __nullable * __nullable)hostPtr port:(nullable uint16_t *)portPtr fromAddress:(NSData *)address;
++ (BOOL)getHost:(NSString * __nullable * __nullable)hostPtr port:(nullable uint16_t *)portPtr fromAddress:(NSData *)address;
 
 + (BOOL)getHost:(NSString * __nullable * __nullable)hostPtr port:(nullable uint16_t *)portPtr family:(nullable sa_family_t *)afPtr fromAddress:(NSData *)address;
 

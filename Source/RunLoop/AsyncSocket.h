@@ -185,9 +185,9 @@ __deprecated_msg("The RunLoop versions of CocoaAsyncSocket are deprecated and wi
 	long theUserData;
 }
 
-- (id)init;
-- (id)initWithDelegate:(id)delegate;
-- (id)initWithDelegate:(id)delegate userData:(long)userData;
+- (instancetype)init;
+- (instancetype)initWithDelegate:(id)delegate;
+- (instancetype)initWithDelegate:(id)delegate userData:(long)userData;
 
 /* String representation is long but has no "\n". */
 - (NSString *)description;

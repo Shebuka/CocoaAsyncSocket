@@ -202,7 +202,7 @@ static void MyCFWriteStreamCallback(CFWriteStreamRef stream, CFStreamEventType t
 	NSUInteger originalBufferLength;
 	long tag;
 }
-- (id)initWithData:(NSMutableData *)d
+- (instancetype)initWithData:(NSMutableData *)d
        startOffset:(NSUInteger)s
          maxLength:(NSUInteger)m
            timeout:(NSTimeInterval)t
@@ -220,7 +220,7 @@ static void MyCFWriteStreamCallback(CFWriteStreamRef stream, CFStreamEventType t
 
 @implementation AsyncReadPacket
 
-- (id)initWithData:(NSMutableData *)d
+- (instancetype)initWithData:(NSMutableData *)d
        startOffset:(NSUInteger)s
          maxLength:(NSUInteger)m
            timeout:(NSTimeInterval)t
@@ -614,12 +614,12 @@ static void MyCFWriteStreamCallback(CFWriteStreamRef stream, CFStreamEventType t
 	long tag;
 	NSTimeInterval timeout;
 }
-- (id)initWithData:(NSData *)d timeout:(NSTimeInterval)t tag:(long)i;
+- (instancetype)initWithData:(NSData *)d timeout:(NSTimeInterval)t tag:(long)i;
 @end
 
 @implementation AsyncWritePacket
 
-- (id)initWithData:(NSData *)d timeout:(NSTimeInterval)t tag:(long)i
+- (instancetype)initWithData:(NSData *)d timeout:(NSTimeInterval)t tag:(long)i
 {
 	if((self = [super init]))
 	{
@@ -647,12 +647,12 @@ static void MyCFWriteStreamCallback(CFWriteStreamRef stream, CFStreamEventType t
   @public
 	NSDictionary *tlsSettings;
 }
-- (id)initWithTLSSettings:(NSDictionary *)settings;
+- (instancetype)initWithTLSSettings:(NSDictionary *)settings;
 @end
 
 @implementation AsyncSpecialPacket
 
-- (id)initWithTLSSettings:(NSDictionary *)settings
+- (instancetype)initWithTLSSettings:(NSDictionary *)settings
 {
 	if((self = [super init]))
 	{
@@ -670,18 +670,18 @@ static void MyCFWriteStreamCallback(CFWriteStreamRef stream, CFStreamEventType t
 
 @implementation AsyncSocket
 
-- (id)init
+- (instancetype)init
 {
 	return [self initWithDelegate:nil userData:0];
 }
 
-- (id)initWithDelegate:(id)delegate
+- (instancetype)initWithDelegate:(id)delegate
 {
 	return [self initWithDelegate:delegate userData:0];
 }
 
 // Designated initializer.
-- (id)initWithDelegate:(id)delegate userData:(long)userData
+- (instancetype)initWithDelegate:(id)delegate userData:(long)userData
 {
 	if((self = [super init]))
 	{
@@ -3432,7 +3432,7 @@ Failed:
 		if([theReadQueue count] > 0)
 		{
 			// Dequeue the next object in the write queue
-			theCurrentRead = [theReadQueue objectAtIndex:0];
+			theCurrentRead = [theReadQueue firstObject];
 			[theReadQueue removeObjectAtIndex:0];
 			
 			if([theCurrentRead isKindOfClass:[AsyncSpecialPacket class]])
@@ -3885,7 +3885,7 @@ Failed:
 		if([theWriteQueue count] > 0)
 		{
 			// Dequeue the next object in the write queue
-			theCurrentWrite = [theWriteQueue objectAtIndex:0];
+			theCurrentWrite = [theWriteQueue firstObject];
 			[theWriteQueue removeObjectAtIndex:0];
 			
 			if([theCurrentWrite isKindOfClass:[AsyncSpecialPacket class]])

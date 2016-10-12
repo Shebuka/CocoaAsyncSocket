@@ -202,7 +202,7 @@ enum GCDAsyncSocketConfig
 	uint8_t *writePointer;
 }
 
-- (id)initWithCapacity:(size_t)numBytes;
+- (instancetype)initWithCapacity:(size_t)numBytes;
 
 - (void)ensureCapacityForWrite:(size_t)numBytes;
 
@@ -225,7 +225,7 @@ enum GCDAsyncSocketConfig
 
 @implementation GCDAsyncSocketPreBuffer
 
-- (id)initWithCapacity:(size_t)numBytes
+- (instancetype)initWithCapacity:(size_t)numBytes
 {
 	if ((self = [super init]))
 	{
@@ -348,7 +348,7 @@ enum GCDAsyncSocketConfig
 	NSUInteger originalBufferLength;
 	long tag;
 }
-- (id)initWithData:(NSMutableData *)d
+- (instancetype)initWithData:(NSMutableData *)d
        startOffset:(NSUInteger)s
          maxLength:(NSUInteger)m
            timeout:(NSTimeInterval)t
@@ -370,7 +370,7 @@ enum GCDAsyncSocketConfig
 
 @implementation GCDAsyncReadPacket
 
-- (id)initWithData:(NSMutableData *)d
+- (instancetype)initWithData:(NSMutableData *)d
        startOffset:(NSUInteger)s
          maxLength:(NSUInteger)m
            timeout:(NSTimeInterval)t
@@ -808,12 +808,12 @@ enum GCDAsyncSocketConfig
 	long tag;
 	NSTimeInterval timeout;
 }
-- (id)initWithData:(NSData *)d timeout:(NSTimeInterval)t tag:(long)i;
+- (instancetype)initWithData:(NSData *)d timeout:(NSTimeInterval)t tag:(long)i;
 @end
 
 @implementation GCDAsyncWritePacket
 
-- (id)initWithData:(NSData *)d timeout:(NSTimeInterval)t tag:(long)i
+- (instancetype)initWithData:(NSData *)d timeout:(NSTimeInterval)t tag:(long)i
 {
 	if((self = [super init]))
 	{
@@ -841,12 +841,12 @@ enum GCDAsyncSocketConfig
   @public
 	NSDictionary *tlsSettings;
 }
-- (id)initWithTLSSettings:(NSDictionary *)settings;
+- (instancetype)initWithTLSSettings:(NSDictionary *)settings;
 @end
 
 @implementation GCDAsyncSpecialPacket
 
-- (id)initWithTLSSettings:(NSDictionary *)settings
+- (instancetype)initWithTLSSettings:(NSDictionary *)settings
 {
 	if((self = [super init]))
 	{
@@ -917,22 +917,22 @@ enum GCDAsyncSocketConfig
     NSTimeInterval alternateAddressDelay;
 }
 
-- (id)init
+- (instancetype)init
 {
 	return [self initWithDelegate:nil delegateQueue:NULL socketQueue:NULL];
 }
 
-- (id)initWithSocketQueue:(dispatch_queue_t)sq
+- (instancetype)initWithSocketQueue:(dispatch_queue_t)sq
 {
 	return [self initWithDelegate:nil delegateQueue:NULL socketQueue:sq];
 }
 
-- (id)initWithDelegate:(id)aDelegate delegateQueue:(dispatch_queue_t)dq
+- (instancetype)initWithDelegate:(id)aDelegate delegateQueue:(dispatch_queue_t)dq
 {
 	return [self initWithDelegate:aDelegate delegateQueue:dq socketQueue:NULL];
 }
 
-- (id)initWithDelegate:(id)aDelegate delegateQueue:(dispatch_queue_t)dq socketQueue:(dispatch_queue_t)sq
+- (instancetype)initWithDelegate:(id)aDelegate delegateQueue:(dispatch_queue_t)dq socketQueue:(dispatch_queue_t)sq
 {
 	if((self = [super init]))
 	{
@@ -3971,7 +3971,7 @@ enum GCDAsyncSocketConfig
 	NSArray *components = [interfaceDescription componentsSeparatedByString:@":"];
 	if ([components count] > 0)
 	{
-		NSString *temp = [components objectAtIndex:0];
+		NSString *temp = [components firstObject];
 		if ([temp length] > 0)
 		{
 			interface = temp;
@@ -4540,7 +4540,7 @@ enum GCDAsyncSocketConfig
 		if ([readQueue count] > 0)
 		{
 			// Dequeue the next object in the write queue
-			currentRead = [readQueue objectAtIndex:0];
+			currentRead = [readQueue firstObject];
 			[readQueue removeObjectAtIndex:0];
 			
 			
@@ -5844,7 +5844,7 @@ enum GCDAsyncSocketConfig
 		if ([writeQueue count] > 0)
 		{
 			// Dequeue the next object in the write queue
-			currentWrite = [writeQueue objectAtIndex:0];
+			currentWrite = [writeQueue firstObject];
 			[writeQueue removeObjectAtIndex:0];
 			
 			
