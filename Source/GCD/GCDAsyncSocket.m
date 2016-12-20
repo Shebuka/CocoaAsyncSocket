@@ -39,6 +39,12 @@
 #define GCDAsyncSocketLoggingEnabled 0
 #endif
 
+
+#ifndef GTMLoggerEnabled
+#define GTMLoggerEnabled 0
+#endif
+
+
 #if GCDAsyncSocketLoggingEnabled
 
 // Logging Enabled - See log level below
@@ -77,6 +83,39 @@ static const int logLevel = GCDAsyncSocketLogLevel;
 
 #else
 
+#if GTMLoggerEnabled
+
+#import "GTMLogger.h"
+
+@interface FeedbackLogger: NSObject
+
++ (void)myLog:(NSString *)fmt, ... NS_FORMAT_FUNCTION(1, 2);
++ (void)myLog:(NSUInteger)level fmt:(NSString *)fmt, ... NS_FORMAT_FUNCTION(2, 3);
+
+@end
+
+#define THIS_FILE   @"GCDAsyncSocket"
+#define THIS_METHOD NSStringFromSelector(_cmd)
+
+#define LogObjc(flg, frmt, ...) [FeedbackLogger myLog:flg fmt:frmt, ##__VA_ARGS__]
+#define LogC(flg, frmt, ...)    [FeedbackLogger myLog:flg fmt:frmt, ##__VA_ARGS__]
+
+#define LogError(frmt, ...)     LogObjc(kGTMLoggerLevelError,   (@"%@: " frmt), THIS_FILE, ##__VA_ARGS__)
+#define LogWarn(frmt, ...)      LogObjc(kGTMLoggerLevelWarning, (@"%@: " frmt), THIS_FILE, ##__VA_ARGS__)
+#define LogInfo(frmt, ...)      LogObjc(kGTMLoggerLevelInfo,    (@"%@: " frmt), THIS_FILE, ##__VA_ARGS__)
+#define LogVerbose(frmt, ...)   LogObjc(kGTMLoggerLevelDebug,   (@"%@: " frmt), THIS_FILE, ##__VA_ARGS__)
+
+#define LogCError(frmt, ...)    LogC(kGTMLoggerLevelError,   (@"%@: " frmt), THIS_FILE, ##__VA_ARGS__)
+#define LogCWarn(frmt, ...)     LogC(kGTMLoggerLevelWarning, (@"%@: " frmt), THIS_FILE, ##__VA_ARGS__)
+#define LogCInfo(frmt, ...)     LogC(kGTMLoggerLevelInfo,    (@"%@: " frmt), THIS_FILE, ##__VA_ARGS__)
+#define LogCVerbose(frmt, ...)  LogC(kGTMLoggerLevelDebug,   (@"%@: " frmt), THIS_FILE, ##__VA_ARGS__)
+
+#define LogTrace()              LogObjc(kGTMLoggerLevelDebug, @"%@: %@", THIS_FILE, THIS_METHOD)
+#define LogCTrace()             LogC(kGTMLoggerLevelDebug,    @"%@: %s", THIS_FILE, __FUNCTION__)
+
+
+#else
+
 // Logging Disabled
 
 #define LogError(frmt, ...)     {}
@@ -91,6 +130,8 @@ static const int logLevel = GCDAsyncSocketLogLevel;
 
 #define LogTrace()              {}
 #define LogCTrace(frmt, ...)    {}
+
+#endif
 
 #endif
 
